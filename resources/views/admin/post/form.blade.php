@@ -11,7 +11,9 @@
         <x-input label="Titre" type="text" name="title" :value="$post->title"></x-input>
         <x-input label="Lien" type="text" name="slug" :value="$post->slug"></x-input>
         <x-input label="Contenu" type="textarea" name="content" :value="$post->content" rows="6"></x-input>
-        <button type="submit" class="btn btn-success">{{$post->exists ? 'Modifier' : 'Créer'}}</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success mt-4">{{$post->exists ? 'Modifier' : 'Créer'}}</button>
+        </div>
     </form>
 
 @endsection

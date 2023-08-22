@@ -23,6 +23,9 @@
             <li class="nav-item">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.post.')]) href="{{route('admin.post.index')}}">Posts</a>
             </li>
+            <li class="nav-item">
+                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.category.')]) href="{{route('admin.category.index')}}">Catégories</a>
+            </li>
         </ul>
     </div>
 </nav>

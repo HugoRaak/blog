@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PostFormRequest;
-use App\Models\Post;
+use App\Http\Requests\Admin\CategoryFormRequest;
+use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application as ContactsApplication;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): View|Application|Factory|ContactsApplication
     {
-        return view('admin.post.index', [
-            'posts' => Post::orderBy('created_at', 'desc')->paginate(12)
+        return view('admin.category.index', [
+            'categories' => Category::paginate(12)
         ]);
     }
 
@@ -28,45 +28,45 @@ class PostController extends Controller
      */
     public function create(): View|Application|Factory|ContactsApplication
     {
-        return view('admin.post.form', [
-            'post' => new Post()
+        return view('admin.category.form', [
+            'category' => new Category()
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostFormRequest $request): RedirectResponse
+    public function store(CategoryFormRequest $request): RedirectResponse
     {
-        Post::create($request->validated());
+        Category::create($request->validated());
         return $this->redirect('créé');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post): View|Application|Factory|ContactsApplication
+    public function edit(Category $category): View|Application|Factory|ContactsApplication
     {
-        return view('admin.post.form', [
-            'post' => $post
+        return view('admin.category.form', [
+            'category' => $category
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostFormRequest $request, Post $post): RedirectResponse
+    public function update(CategoryFormRequest $request, Category $category): RedirectResponse
     {
-        $post->update($request->validated());
+        $category->update($request->validated());
         return $this->redirect('modifié');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post): RedirectResponse
+    public function destroy(Category $category): RedirectResponse
     {
-        $post->delete();
+        $category->delete();
         return $this->redirect('supprimé');
     }
 
@@ -75,6 +75,6 @@ class PostController extends Controller
      */
     private function redirect(string $action): RedirectResponse
     {
-        return to_route('admin.post.index')->with('success', 'L\'article a bien été ' . $action);
+        return to_route('admin.category.index')->with('success', 'La catégorie a bien été ' . $action);
     }
 }
