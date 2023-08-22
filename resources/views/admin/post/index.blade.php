@@ -27,14 +27,12 @@
                 <td class="align-middle text-center">rien</td> {{--TODO: afficher la date de modification--}}
 {{--                <td class="align-middle text-center">modifié {{article.__get('updated_at')|ago}} </td>--}}
                 <td class="align-middle text-center">
-                    <div class="d-flex gap-2">
-                        <a href="{{route('admin.post.edit', $post)}}" class="btn btn-primary">Modifier</a>
-                        <form action="{{route('admin.post.destroy', $post)}}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
-                        </form>
-                    </div>
+                    <a href="{{route('admin.post.edit', $post)}}" class="btn btn-primary">Modifier</a>
+                    <form action="{{route('admin.post.destroy', $post)}}" method="post" style="display: inline;">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
+                    </form>
                 </td>
             </tr>
         @endforeach

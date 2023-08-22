@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostFormRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContactsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -29,7 +30,8 @@ class PostController extends Controller
     public function create(): View|Application|Factory|ContactsApplication
     {
         return view('admin.post.form', [
-            'post' => new Post()
+            'post' => new Post(),
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -38,7 +40,8 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request): RedirectResponse
     {
-        Post::create($request->validated());
+        $post = Post::create($request->validated());
+        $post->categories()->sync($request->validated('categories'));
         return $this->redirect('créé');
     }
 
@@ -48,7 +51,8 @@ class PostController extends Controller
     public function edit(Post $post): View|Application|Factory|ContactsApplication
     {
         return view('admin.post.form', [
-            'post' => $post
+            'post' => $post,
+            'categories' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -57,6 +61,7 @@ class PostController extends Controller
      */
     public function update(PostFormRequest $request, Post $post): RedirectResponse
     {
+        $post->categories()->sync($request->validated('categories'));
         $post->update($request->validated());
         return $this->redirect('modifié');
     }

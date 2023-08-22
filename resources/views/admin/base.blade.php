@@ -9,6 +9,8 @@
           rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
           crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <title>@yield('title') | Administration</title>
 </head>
 <body>
@@ -30,7 +32,7 @@
     </div>
 </nav>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-4">
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -43,6 +45,10 @@
 
     @yield('content')
 </div>
+
+<script>
+    new TomSelect('select[multiple]', {plugins: {remove_button: {title: 'Supprimer'}}})
+</script>
 
 </body>
 </html>

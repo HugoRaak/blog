@@ -24,14 +24,12 @@
             <tr>
                 <td class="align-middle text-center">{{$category->name}}</td>
                 <td class="align-middle text-center">
-                    <div class="d-flex gap-2">
-                        <a href="{{route('admin.category.edit', $category)}}" class="btn btn-primary">Modifier</a>
-                        <form action="{{route('admin.category.destroy', $category)}}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
-                        </form>
-                    </div>
+                    <a href="{{route('admin.category.edit', $category)}}" class="btn btn-primary">Modifier</a>
+                    <form action="{{route('admin.category.destroy', $category)}}" method="post" style="display: inline;">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
