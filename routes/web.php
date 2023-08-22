@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('admin')->name('admin.')->group(fn () => [
+    Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show'])
+]);
