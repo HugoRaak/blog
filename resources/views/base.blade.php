@@ -23,6 +23,21 @@
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'post.')]) href="{{route('post.index')}}">Blog</a>
             </li>
         </ul>
+        <div class="ms-auto mx-4">
+            @guest
+                <a href="{{route('login')}}"><button type="submit" class="btn btn-outline-light">Se connecter</button></a>
+            @endguest
+            @auth
+                <div class="d-flex gap-2">
+                    <a href="{{route('admin.post.index')}}"><button type="submit" class="btn btn-outline-light">Administration</button></a>
+                    <form action="{{route('logout')}}" method="post">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir vous déconnecter ?')">Se déconnecter</button>
+                    </form>
+                </div>
+            @endauth
+        </div>
     </div>
 </nav>
 

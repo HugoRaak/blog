@@ -28,6 +28,13 @@
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.category.')]) href="{{route('admin.category.index')}}">Catégories</a>
             </li>
         </ul>
+        <div class="ms-auto mx-4">
+            <form action="{{route('logout')}}" method="post">
+                @method('delete')
+                @csrf
+                <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir vous déconnecter ?')">Se déconnecter</button>
+            </form>
+        </div>
     </div>
 </nav>
 

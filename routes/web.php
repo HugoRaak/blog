@@ -40,9 +40,18 @@ Route::prefix('contact')->name('contact.')->controller(\App\Http\Controllers\Con
 ]);
 
 /**
+ * routes about authentification
+ */
+Route::controller(\App\Http\Controllers\AuthController::class)->group(fn () => [
+    Route::get('/login', 'login')->middleware('guest')->name('login'),
+    Route::post('/login', 'doLogin'),
+    Route::delete('/logout', 'logout')->middleware('auth')->name('logout')
+]);
+
+/**
  * routes about the admin interface
  */
-Route::prefix('admin')->name('admin.')->group(fn () => [
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(fn () => [
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']),
     Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show'])
 ]);
