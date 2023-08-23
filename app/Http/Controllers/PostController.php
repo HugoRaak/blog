@@ -14,7 +14,9 @@ class PostController extends Controller
     public function index(SearchPostRequest $request): Application|Factory|View|ContractsApplication
     {
         $query = Post::orderByDesc('created_at');
-        if($title = $request->validated('title')) $query->where('title', 'like', "%{$title}%");
+        if ($title = $request->validated('title')) {
+            $query->where('title', 'like', "%{$title}%");
+        }
         return view('post.index', [
            'posts' => $query->paginate(12)
         ]);

@@ -18,6 +18,9 @@ $idRegex = '[0-9]+';
 
 Route::get('/', \App\Http\Controllers\HomeController::class);
 
+/**
+ * routes about the display of posts
+ */
 Route::prefix('posts')->name('post.')->controller(\App\Http\Controllers\PostController::class)
     ->group(fn () => [
        Route::get('', 'index')->name('index'),
@@ -27,6 +30,18 @@ Route::prefix('posts')->name('post.')->controller(\App\Http\Controllers\PostCont
        ])->middleware(\App\Http\Middleware\EnsureSlugPostIsValid::class)
 ]);
 
+/**
+ * routes about contact form
+ */
+Route::prefix('contact')->name('contact.')->controller(\App\Http\Controllers\ContactController::class)
+    ->group(fn () => [
+        Route::get('', 'index')->name('index'),
+        Route::post('send', 'send')->name('send')
+]);
+
+/**
+ * routes about the admin interface
+ */
 Route::prefix('admin')->name('admin.')->group(fn () => [
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']),
     Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show'])

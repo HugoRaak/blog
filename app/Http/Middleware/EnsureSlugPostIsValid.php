@@ -19,7 +19,9 @@ class EnsureSlugPostIsValid
     {
         /** @var Post $post */
         $post = $request->post;
-        if($post->slug !== $request->slug) return to_route('post.show', ['slug' => $post->slug, 'post' => $post]);
+        if ($post->slug !== $request->slug) {
+            return to_route('post.show', ['slug' => $post->slug, 'post' => $post]);
+        }
         return $next($request);
     }
 }
