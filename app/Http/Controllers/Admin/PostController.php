@@ -20,7 +20,7 @@ class PostController extends Controller
     public function index(): View|Application|Factory|ContactsApplication
     {
         return view('admin.post.index', [
-            'posts' => Post::orderBy('created_at', 'desc')->paginate(12)
+            'posts' => Post::orderByDesc('created_at')->paginate(12)
         ]);
     }
 

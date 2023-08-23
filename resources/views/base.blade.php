@@ -9,26 +9,28 @@
           rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
           crossorigin="anonymous">
-    <title>@yield('title')</title>
+    <title>@yield('title') | Blog</title>
 </head>
 <body>
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Mon blog</a>
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">HugoRaak</a>
+
+    @php $routeName = Route::currentRouteName(); @endphp
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
+                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'post.')]) href="{{route('post.index')}}">Blog</a>
             </li>
         </ul>
     </div>
 </nav>
 
-<div class="container mt-4 mb-4">
+<div class="container mt-4 mb-4" style="min-height: 100vh;">
     @yield('content')
 </div>
-
-<footer class="text-center text-lg-start text-white" style="background-color: #45526e">
+{{--TODO: footer--}}
+<footer class="text-center text-lg-start text-white sticky-footer" style="background-color: #45526e;">
     <div class="container p-4 pb-0">
         <div class="row">
             <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">

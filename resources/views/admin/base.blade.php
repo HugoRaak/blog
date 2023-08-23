@@ -17,10 +17,9 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Administration</a>
 
+    @php $routeName = Route::currentRouteName(); @endphp
+
     <div class="collapse navbar-collapse">
-
-        @php $routeName = Route::currentRouteName(); @endphp
-
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.post.')]) href="{{route('admin.post.index')}}">Posts</a>

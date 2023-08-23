@@ -27,12 +27,12 @@ class PostFormRequest extends FormRequest
             'title' => [
                 'required',
                 Rule::unique('posts')->ignore($this->route()?->parameter('post') ?: null),
-                'min:6'
+                'between:6,50'
             ],
             'slug' => [
                 'required_unless:title,null',
                 Rule::unique('posts')->ignore($this->route()?->parameter('post') ?: null),
-                'min:6',
+                'between:6,50',
                 'regex:/^[a-z0-9\-]+$/'
             ],
             'content' => ['required', 'min:100'],

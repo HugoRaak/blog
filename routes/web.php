@@ -13,9 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+$slugRegex = '[a-z0-9\-]+';
+$idRegex = '[0-9]+';
+
+Route::get('/', \App\Http\Controllers\HomeController::class);
+
+Route::prefix('posts')->name('post.')->controller(\App\Http\Controllers\PostController::class)
+    ->group(fn () => [
+       Route::get('', 'index')->name('index'),
+       Route::get('/{slug}-{post}', 'show')->name('show')->where([
+           'post' => $idRegex,
+           'slug' => $slugRegex
+       ])->middleware(\App\Http\Middleware\EnsureSlugPostIsValid::class)
+]);
 
 Route::prefix('admin')->name('admin.')->group(fn () => [
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']),
