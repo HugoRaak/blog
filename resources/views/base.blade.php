@@ -9,11 +9,24 @@
           rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
           crossorigin="anonymous">
-    <title>@yield('title') | Blog</title>
+    <title>@yield('title') | HugoRaak</title>
+    <style>
+        .dropdown-menu {
+            display: none;
+            right: 0;
+            left: auto;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">HugoRaak</a>
+    <a class="navbar-brand mx-4" href="/">
+        <img src="storage/images/logo.png" height="70" alt="logo">
+    </a>
 
     @php $routeName = Route::currentRouteName(); @endphp
 
@@ -25,16 +38,22 @@
         </ul>
         <div class="ms-auto mx-4">
             @guest
-                <a href="{{route('login')}}"><button type="submit" class="btn btn-outline-light">Se connecter</button></a>
+                <a href="{{route('login')}}"><button type="submit" class="btn btn-primary">Se connecter</button></a>
             @endguest
             @auth
-                <div class="d-flex gap-2">
-                    <a href="{{route('admin.post.index')}}"><button type="submit" class="btn btn-outline-light">Administration</button></a>
-                    <form action="{{route('logout')}}" method="post">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir vous déconnecter ?')">Se déconnecter</button>
-                    </form>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
+                        <a class="dropdown-item" href="{{route('admin.post.index')}}">Administration</a>
+                        <hr>
+                        <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Se déconnecter</button>
+                        </form>
+                    </div>
                 </div>
             @endauth
         </div>

@@ -25,10 +25,10 @@
                 <td class="align-middle text-center">{{$category->name}}</td>
                 <td class="align-middle text-center">
                     <a href="{{route('admin.category.edit', $category)}}" class="btn btn-primary">Modifier</a>
-                    <form action="{{route('admin.category.destroy', $category)}}" method="post" style="display: inline;">
+                    <form action="{{route('admin.category.destroy', $category)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cette catégorie ?')" style="display: inline;">
                         @method('delete')
                         @csrf
-                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
                 </td>
             </tr>

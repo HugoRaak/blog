@@ -28,10 +28,10 @@
 {{--                <td class="align-middle text-center">modifié {{article.__get('updated_at')|ago}} </td>--}}
                 <td class="align-middle text-center">
                     <a href="{{route('admin.post.edit', $post)}}" class="btn btn-primary">Modifier</a>
-                    <form action="{{route('admin.post.destroy', $post)}}" method="post" style="display: inline;">
+                    <form action="{{route('admin.post.destroy', $post)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet article ?')" style="display: inline;">
                         @method('delete')
                         @csrf
-                        <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
                     </form>
                 </td>
             </tr>

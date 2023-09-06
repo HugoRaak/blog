@@ -12,6 +12,17 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <title>@yield('title') | Administration</title>
+    <style>
+        .dropdown-menu {
+            display: none;
+            right: 0;
+            left: auto;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -29,11 +40,19 @@
             </li>
         </ul>
         <div class="ms-auto mx-4">
-            <form action="{{route('logout')}}" method="post">
-                @method('delete')
-                @csrf
-                <button type="submit" class="btn btn-danger" onclick="confirm('Êtes vous sûr de vouloir vous déconnecter ?')">Se déconnecter</button>
-            </form>
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="/">Retour au site</a>
+                    <hr>
+                    <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Se déconnecter</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
