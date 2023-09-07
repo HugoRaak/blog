@@ -27,10 +27,12 @@ class Post extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function excerpt(string $string, int $limit=100): ?string
+    public function excerpt(string $string, int $limit = 100): ?string
     {
         $excerpt = Str::limit($string, $limit);
-        if($lastSpace = strrpos($excerpt, ' ')) return substr($excerpt, 0, $lastSpace) . '...';
+        if ($lastSpace = strrpos($excerpt, ' ')) {
+            return substr($excerpt, 0, $lastSpace) . '...';
+        }
         return $excerpt;
     }
 }

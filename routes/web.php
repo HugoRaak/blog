@@ -27,7 +27,7 @@ Route::prefix('posts')->name('post.')->controller(\App\Http\Controllers\PostCont
         Route::get('/{slug}-{post}', 'show')->name('show')->where([
             'post' => $idRegex,
             'slug' => $slugRegex
-        ])->middleware(\App\Http\Middleware\EnsureSlugPostIsValid::class)
+        ])->middleware('post.slug')
     ]);
 
 /**
@@ -52,7 +52,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->controller(Profi
 /**
  * routes about the admin interface
  */
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(fn () => [
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(fn () => [
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']),
     Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show'])
 ]);

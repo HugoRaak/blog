@@ -47,7 +47,9 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
-                        <a class="dropdown-item" href="{{route('admin.post.index')}}">Administration</a>
+                        @if(Auth::user()->isAdmin())
+                            <a class="dropdown-item" href="{{route('admin.post.index')}}">Administration</a>
+                        @endif
                         <hr>
                         <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
                             @csrf
