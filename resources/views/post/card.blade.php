@@ -5,7 +5,7 @@
         </div>
         <p class="card-text">{{nl2br($post->content)}}</p> {{--TODO: exerpt--}}
         <div class="card-footer">
-            <p class="text-muted text-center">posté il y a </p>{{--TODO: timeago--}}
+            <p class="text-muted text-center">posté {{Carbon\Carbon::parse($post->created_at)->ago()}}</p>
         </div>
     </div>
 </div>

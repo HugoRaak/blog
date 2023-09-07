@@ -25,7 +25,7 @@
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-primary">
     <a class="navbar-brand mx-4" href="/">
-        <img src="storage/images/logo.png" height="70" alt="logo">
+        <img src="/storage/images/logo.png" height="70" alt="logo">
     </a>
 
     @php $routeName = Route::currentRouteName(); @endphp

@@ -5,7 +5,7 @@
 @section('content')
     <div class="text-center">
         <h1>@yield('title')</h1>
-        <p class="text-muted">Il y a</p> {{--TODO: timeago--}}
+        <p class="text-muted">modifié {{Carbon\Carbon::parse($post->updated_at)->ago()}}</p>
     </div>
     <div class="row">
         <div class="col">

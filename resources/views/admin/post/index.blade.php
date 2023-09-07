@@ -24,8 +24,7 @@
         @foreach($posts as $post)
             <tr>
                 <td class="align-middle text-center">{{$post->title}}</td>
-                <td class="align-middle text-center">rien</td> {{--TODO: afficher la date de modification--}}
-{{--                <td class="align-middle text-center">modifié {{article.__get('updated_at')|ago}} </td>--}}
+                <td class="align-middle text-center">modifié {{Carbon\Carbon::parse($post->updated_at)->ago()}}</td>
                 <td class="align-middle text-center">
                     <a href="{{route('admin.post.edit', $post)}}" class="btn btn-primary">Modifier</a>
                     <form action="{{route('admin.post.destroy', $post)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet article ?')" style="display: inline;">
