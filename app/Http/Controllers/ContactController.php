@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ContactRequestEvent;
 use App\Http\Requests\ContactFormRequest;
 use App\Mail\ContactMail;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
@@ -20,7 +21,7 @@ class ContactController extends Controller
 
     public function send(ContactFormRequest $request): RedirectResponse
     {
-        Mail::send(new ContactMail($request->validated()));
+        event(new ContactRequestEvent($request->validated()));
         return back()->with('success', 'Le mail a bien été envoyé');
     }
 }
