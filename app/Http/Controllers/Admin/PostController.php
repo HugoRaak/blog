@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -46,6 +47,7 @@ class PostController extends Controller
     public function store(PostFormRequest $request): RedirectResponse
     {
         $post = Post::create($request->validated());
+        $post->image = $request->validated('image')?->store('images/posts', 'public');
         $post->categories()->sync($request->validated('categories'));
         return $this->redirect('créé');
     }
@@ -66,6 +68,10 @@ class PostController extends Controller
      */
     public function update(PostFormRequest $request, Post $post): RedirectResponse
     {
+        if($post->image && $image = $request->validated('image')) {
+            Storage::disk('public')->delete($post->image);
+            $post->image = $image->store('images/posts', 'public');
+        }
         $post->categories()->sync($request->validated('categories'));
         $post->update($request->validated());
         return $this->redirect('modifié');

@@ -8,9 +8,11 @@
         <p class="text-muted">modifié {{Carbon\Carbon::parse($post->updated_at)->ago()}}</p>
     </div>
     <div class="row">
-        <div class="col">
-        {{--TODO: picture--}}
-        </div>
+        @if($post->image !== null)
+            <div class="col">
+                <img src="/storage/{{$post->image}}" alt="{{$post->title}}" style="max-height: 300px;">
+            </div>
+        @endif
         <div class="col">
             <p>{{nl2br($post->content)}}</p>
             <ul class="list-group mt-4">

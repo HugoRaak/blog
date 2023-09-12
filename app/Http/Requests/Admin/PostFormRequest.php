@@ -36,7 +36,8 @@ class PostFormRequest extends FormRequest
                 'regex:/^[a-z0-9\-]+$/'
             ],
             'content' => ['required', 'min:100'],
-            'categories' => ['required', 'array', 'exists:categories,id']
+            'categories' => ['required', 'array', 'exists:categories,id'],
+            'image' => ['image', 'max:2000']
         ];
     }
 
