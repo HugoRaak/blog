@@ -12,7 +12,7 @@
 
     <div class="row">
         @forelse($posts as $post)
-            <div class="col">
+            <div class="col-4 mt-2">
                 @include('post.card')
             </div>
         @empty
