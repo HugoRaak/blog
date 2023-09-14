@@ -10,6 +10,7 @@
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
           crossorigin="anonymous">
     <title>@yield('title') | HugoRaak</title>
+    @yield('head', '')
     <style>
         .dropdown-menu {
             display: none;

@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchPostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -25,7 +28,9 @@ class PostController extends Controller
     public function show(string $slug, Post $post): Application|Factory|View|ContractsApplication
     {
         return view('post.show', [
-            'post' => $post
+            'post' => $post,
+            'comments' => $post->comments()->get(),
+//            'formToken' => session('form_token')
         ]);
     }
 }

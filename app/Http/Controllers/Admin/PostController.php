@@ -68,8 +68,8 @@ class PostController extends Controller
      */
     public function update(PostFormRequest $request, Post $post): RedirectResponse
     {
-        if ($post->image && $image = $request->validated('image')) {
-            Storage::disk('public')->delete($post->image);
+        if ($image = $request->validated('image')) {
+            if($post->image) Storage::disk('public')->delete($post->image);
             $post->image = $image->store('images/posts', 'public');
         }
         $post->categories()->sync($request->validated('categories'));

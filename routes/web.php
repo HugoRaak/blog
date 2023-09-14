@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Post\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,13 +23,17 @@ Route::get('/', \App\Http\Controllers\HomeController::class);
 /**
  * routes about the display of posts
  */
-Route::prefix('posts')->name('post.')->controller(\App\Http\Controllers\PostController::class)
+Route::prefix('posts')->name('post.')
     ->group(fn () => [
-        Route::get('', 'index')->name('index'),
-        Route::get('/{slug}-{post}', 'show')->name('show')->where([
+        Route::get('', [PostController::class, 'index'])->name('index'),
+        Route::prefix('/{slug}-{post}')->where([
             'post' => $idRegex,
-            'slug' => $slugRegex
-        ])->middleware('post.slug')
+            'slug' => $slugRegex]
+        )->group(fn () => [
+            Route::get('', [PostController::class, 'show'])->name('show')->middleware(['post.slug', 'formToken.generate']),
+            Route::post('', [CommentController::class, 'store'])->name('comment.store')->middleware('auth'),
+            Route::get('/reply-form/{token}', [CommentController::class, 'form'])->middleware('formToken.validate')
+        ])
     ]);
 
 /**

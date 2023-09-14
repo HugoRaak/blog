@@ -10,8 +10,8 @@
         <div class="form-group">
             <div class="row">
                 <div class="col">
-                    <x-input label="Titre" type="text" name="title" :value="$post->title"/>
-                    <x-input label="Lien" type="text" name="slug" :value="$post->slug"/>
+                    <x-input label="Titre" name="title" :value="$post->title"/>
+                    <x-input label="Lien" name="slug" :value="$post->slug"/>
                 </div>
                 <div class="col">
                     @if($post->image !== null)
