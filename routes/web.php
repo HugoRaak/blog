@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Post\CommentController;
@@ -30,9 +31,8 @@ Route::prefix('posts')->name('post.')
             'post' => $idRegex,
             'slug' => $slugRegex]
         )->group(fn () => [
-            Route::get('', [PostController::class, 'show'])->name('show')->middleware(['post.slug', 'formToken.generate']),
-            Route::post('', [CommentController::class, 'store'])->name('comment.store')->middleware('auth'),
-            Route::get('/reply-form/{token}', [CommentController::class, 'form'])->middleware('formToken.validate')
+            Route::get('', [PostController::class, 'show'])->name('show')->middleware('post.slug'),
+            Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth'),
         ])
     ]);
 

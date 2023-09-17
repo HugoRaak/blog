@@ -3,7 +3,9 @@
 @section('title', $post->title)
 
 @section('head')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/post/show.css')}}"/>
+    @vite('resources/css/blog/show.css')
+    @vite('resources/js/app.js')
+    <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
@@ -26,53 +28,15 @@
         </h5>
     </div>
     <div class="mt-4">
-        <h4>{{ $comments->count() }} Commentaires</h4>
-        @include('post.comment.form')
-        <hr>
-        <div class="mt-2">
-            @foreach($comments as $comment)
-                <div class="row mt-4 comment" id="c{{$comment->id}}">
-                    <div class="col">
-                        <p class="mb-1"><b>{{$comment->user->name}}</b></p>
-                        <div class="row w-50">
-                            <div class="col">
-                                <p class="text-muted">
-                                    {{ \Carbon\Carbon::parse($comment->created_at)->ago() }}
-                                    @if($comment->created_at->isBefore($comment->updated_at)) <i>(Modifié)</i> @endif
-                                </p>
-                            </div>
-                            <div class="col reply">
-                                    <svg class="mt-2" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" viewBox="0 0 27.361 27.361" xml:space="preserve">
-                                        <g><path d="M0,12.022l9.328-9.328v4.146h9.326c4.809,0,8.707,3.898,8.707,8.706v9.12c0-4.81-3.898-8.704-8.707-8.704H9.328v5.389 L0,12.022z"/></g>
-                                    </svg>
-                                <a href="#c{{ $comment->id }}" class="reply-link">Répondre</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="dropdown">
-                            <button class="btn btn-outline-light text-black"><b>&#8942;</b></button>
-                            <div class="dropdown-menu start-0 w-25">
-                                <a class="dropdown-item" href="#">Modifier</a>
-                                <a class="dropdown-item" href="#">Signaler</a>
-                                <a class="dropdown-item" href="#">Supprimer</a>
-                            </div>
-                        </div>
-                    </div>
-                    <p>{{ $comment->message }}</p>
-                    <div class="replies"></div>
-                </div>
-            @endforeach
-        </div>
+        <h4>{{ $nbComments }} Commentaires</h4>
+        <form action="{{ route('post.comment.store', ['slug' => $post->slug, 'post' => $post]) }}" method="post" style="max-width: 50%;">
+            @csrf
+            <div class="form-group">
+                <x-input label="Votre message" type="textarea" name="message" rows="4" required/>
+                <button type="submit" class="btn btn-primary mt-2">Envoyer</button>
+            </div>
+        </form>
+        @livewire('comments.comments-list', ['post' => $post])
     </div>
-
-{{--    <script>--}}
-{{--        const post = {--}}
-{{--            id: {{ $post->id }},--}}
-{{--            slug: "{{ $post->slug }}",--}}
-{{--        };--}}
-{{--        const formToken = "{{ $formToken }}";--}}
-{{--    </script>--}}
-{{--    <script src="{{asset('js/post/show.js')}}"></script>--}}
 
 @endsection

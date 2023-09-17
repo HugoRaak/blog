@@ -11,6 +11,7 @@
           crossorigin="anonymous">
     <title>@yield('title') | HugoRaak</title>
     @yield('head', '')
+    @livewireStyles
     <style>
         .dropdown-menu {
             display: none;
@@ -107,6 +108,8 @@
         </div>
     </div>
 </footer>
+
+@livewireScripts
 
 </body>
 </html>

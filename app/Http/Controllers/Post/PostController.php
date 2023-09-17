@@ -29,8 +29,7 @@ class PostController extends Controller
     {
         return view('post.show', [
             'post' => $post,
-            'comments' => $post->comments()->get(),
-//            'formToken' => session('form_token')
+            'nbComments' => $post->comments()->count(),
         ]);
     }
 }
