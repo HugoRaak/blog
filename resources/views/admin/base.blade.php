@@ -47,7 +47,7 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="/">Retour au site</a>
-                    <hr>
+                    <hr class="dropdown-divider">
                     <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
                         @csrf
                         <button type="submit" class="dropdown-item">Se déconnecter</button>

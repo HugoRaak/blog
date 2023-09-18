@@ -9,6 +9,7 @@
           rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
           crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
     <title>@yield('title') | HugoRaak</title>
     @yield('head', '')
     @livewireStyles
@@ -52,7 +53,7 @@
                         @if(Auth::user()->isAdmin())
                             <a class="dropdown-item" href="{{route('admin.post.index')}}">Administration</a>
                         @endif
-                        <hr>
+                        <hr class="dropdown-divider">
                         <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
                             @csrf
                             <button type="submit" class="dropdown-item">Se déconnecter</button>

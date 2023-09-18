@@ -1,9 +1,14 @@
-.dropdown {
-    display: none;
+.dropdown-btn {
+    display: inline-block;
 }
 
-.comment:hover .dropdown{
-    display: block;
+.dropdown-menu {
+    max-width: 10%;
+    position: absolute;
+}
+
+.icon-dropdown {
+    margin-right: 8px;
 }
 
 .date-reply {

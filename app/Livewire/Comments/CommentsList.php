@@ -11,7 +11,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 
 class CommentsList extends Component
 {

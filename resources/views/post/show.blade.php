@@ -3,9 +3,7 @@
 @section('title', $post->title)
 
 @section('head')
-    @vite('resources/css/blog/show.css')
-    @vite('resources/js/app.js')
-    <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
+    @vite(['resources/css/blog/show.css', 'resources/js/app.js'])
 @endsection
 
 @section('content')

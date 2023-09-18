@@ -3,6 +3,7 @@
 namespace App\Livewire\Comments;
 
 use App\Models\Post;
+use App\Models\Reply;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
@@ -14,13 +15,27 @@ use Illuminate\Foundation\Application;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
-class ReplyForm extends Component
+class WireForm extends Component
 {
-    public Comment $comment;
+    public Comment|Reply $comment;
     public Post $post;
+    public bool $isEdit = false;
+    public string $label = 'Votre réponse';
+    public string $action = 'store';
+    public string $cancelAction = '$parent.cancelReply';
 
     #[Rule('string|required|min:2')]
     public $message = '';
+
+    public function mount()
+    {
+        if($this->isEdit) {
+            $this->label = 'Votre commentaire';
+            $this->action = 'save';
+            $this->cancelAction = '$parent.cancelEdit';
+            $this->message = $this->comment->message;
+        }
+    }
 
     public function store(): Redirector|RedirectResponse
     {
@@ -32,8 +47,15 @@ class ReplyForm extends Component
         ))->with('success', 'Votre réponse a été posté');
     }
 
+    public function save(): void
+    {
+        $this->validate();
+        $this->comment->update($this->only('message'));
+        $this->dispatch('update');
+    }
+
     public function render(): View|Application|Factory|ContactsApplication
     {
-        return view('livewire.comments.reply-form');
+        return view('livewire.comments.wire-form');
     }
 }
