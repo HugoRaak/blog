@@ -5,7 +5,7 @@
     <div class="mt-2 comments" wire:loading.delay.class="opacity-50" wire:target="loadComments">
         @foreach($comments as $comment)
             <div id="c{{$comment->id}}">
-                @livewire('comments.show', ['comment' => $comment, 'post' => $post, key($comment->id)])
+                @livewire('comments.show', ['comment' => $comment, 'post' => $post, key('comment_' . $comment->id)])
                 @if($loop->last) <br> @endif
                 @if(!$comment->replies->isEmpty())
                     <div class="show-replies">

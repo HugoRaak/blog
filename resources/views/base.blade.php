@@ -66,6 +66,7 @@
 </nav>
 
 <div class="container mt-4 mb-4" style="min-height: 100vh;">
+    @include('shared.flash')
     @yield('content')
 </div>
 {{--TODO: footer--}}

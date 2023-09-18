@@ -37,6 +37,12 @@ Route::prefix('posts')->name('post.')
     ]);
 
 /**
+ * routes about comments and replies
+ */
+Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy')->middleware('auth');
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('auth');
+
+/**
  * routes about contact form
  */
 Route::prefix('contact')->name('contact.')->controller(\App\Http\Controllers\ContactController::class)

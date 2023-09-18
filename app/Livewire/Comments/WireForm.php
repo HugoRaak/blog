@@ -51,7 +51,7 @@ class WireForm extends Component
     {
         $this->validate();
         $this->comment->update($this->only('message'));
-        $this->dispatch('update');
+        $this->dispatch('update.' . $this->comment->id, type: get_class($this->comment));
     }
 
     public function render(): View|Application|Factory|ContactsApplication

@@ -30,10 +30,13 @@ class Show extends Component
         $this->edit = true;
     }
 
-    #[On('update')]
-    public function cancelEdit(): void
+    #[On('update.{comment.id}')]
+    public function cancelEdit($type): void
     {
         $this->edit = false;
+        if(get_class($this->comment) === $type) {
+            $this->dispatch('endUpdate', message: 'Le commentaire a bien été modifié')->self();
+        }
     }
 
     public function render(): View|Application|Factory|ContactsApplication
