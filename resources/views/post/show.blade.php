@@ -14,7 +14,7 @@
     <div class="row">
         @if($post->image !== null)
             <div class="text-center">
-                <img src="/storage/{{$post->image}}" alt="{{$post->title}}" style="max-height: 80%; max-width: 80%;">
+                <img src="/storage/{{$post->image}}" alt="Photo de l'article" style="max-height: 80%; max-width: 80%;">
             </div>
         @endif
         <p>{{nl2br($post->content)}}</p>
@@ -25,7 +25,7 @@
             @endforeach
         </h5>
     </div>
-    <div class="mt-4">
+    <div class="mt-4" x-cloak>
         <h4>{{ $nbComments }} Commentaires</h4>
         <form action="{{ route('post.comment.store', ['slug' => $post->slug, 'post' => $post]) }}" method="post" style="max-width: 50%;">
             @csrf

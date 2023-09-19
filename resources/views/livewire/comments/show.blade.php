@@ -10,15 +10,23 @@
          });">
     <div x-show="flashMessage" x-text="flashMessage" class="alert alert-success"></div>
     <div class="col">
-        <p class="mb-1"><b>{{$comment->user->name}}</b></p>
-        <div class="date-reply">
-            <p class="text-muted">
-                {{ \Carbon\Carbon::parse($comment->created_at)->ago() }}
-                @if($comment->created_at->isBefore($comment->updated_at)) <i>(Modifié)</i> @endif
-            </p>
-            <div class="reply-input">
-                <i class="fa-solid fa-share fa-flip-horizontal fa-xs respond-icon"></i>
-                <p wire:click="$parent.startReply({{ $commentId }})" class="reply-display">Répondre</p>
+        <div class="profile">
+            <div class=" profile-picture">
+                <img src="@if($comment->user->picture) /storage/{{ $comment->user->picture }} @else /storage/images/profile/default.png @endif"
+                     alt="Photo de profile">
+            </div>
+            <div class="profile-info">
+                <p class="mb-1"><b>{{$comment->user->name}}</b></p>
+                <div class="date-reply">
+                    <p class="text-muted">
+                        {{ \Carbon\Carbon::parse($comment->created_at)->ago() }}
+                        @if($comment->created_at->isBefore($comment->updated_at)) <i>(Modifié)</i> @endif
+                    </p>
+                    <div class="reply-input">
+                        <i class="fa-solid fa-share fa-flip-horizontal fa-xs respond-icon"></i>
+                        <p wire:click="$parent.startReply({{ $commentId }})" class="reply-display">Répondre</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

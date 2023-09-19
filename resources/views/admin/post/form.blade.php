@@ -15,7 +15,7 @@
                 </div>
                 <div class="col">
                     @if($post->image !== null)
-                        <img src="/storage/{{$post->image}}" alt="{{$post->title}}" style="max-height: 100px;"><br>
+                        <img src="/storage/{{$post->image}}" alt="Photo de l'article" style="max-height: 100px;"><br>
                     @endif
                     <x-input label="Images" type="file" name="image" accept="image/*"/>
                 </div>
