@@ -25,14 +25,15 @@ class WireForm extends Component
     public string $cancelAction = '$parent.cancelReply';
 
     #[Rule('string|required|min:2')]
+    /** @phpstan-ignore-next-line */
     public $message = '';
 
-    public function mount()
+    public function mount(): void
     {
-        if($this->isEdit) {
+        if ($this->isEdit) {
             $this->label = 'Votre commentaire';
             $this->action = 'save';
-            $this->cancelAction = '$parent.cancelEdit';
+            $this->cancelAction = '$parent.cancelEdit(\'\')';
             $this->message = $this->comment->message;
         }
     }
@@ -40,11 +41,11 @@ class WireForm extends Component
     public function store(): Redirector|RedirectResponse
     {
         $this->validate();
-        $this->comment->replies()->create($this->only('message') + ['user_id' => Auth::user()->id]);
+        /** @phpstan-ignore-next-line */
+        $this->comment->replies()->create($this->only('message') + ['user_id' => Auth::user()?->id]);
         return redirect()->to(route('post.show', [
             'slug' => $this->post->slug,
-            'post' => $this->post]
-        ))->with('success', 'Votre réponse a été posté');
+            'post' => $this->post]))->with('success', 'Votre réponse a été posté');
     }
 
     public function save(): void

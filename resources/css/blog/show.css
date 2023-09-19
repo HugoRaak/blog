@@ -2,13 +2,10 @@
     display: inline-block;
 }
 
-.dropdown-menu {
+.custom-dropdown-menu {
     max-width: 10%;
     position: absolute;
-}
-
-.icon-dropdown {
-    margin-right: 8px;
+    z-index: 1;
 }
 
 .date-reply {

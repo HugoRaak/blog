@@ -44,7 +44,7 @@
         </div>
 
         <div class="flex items-center gap-4 mt-2 text-center">
-            <button type="submit" class="btn btn-secondary">Enregistrer</button>
+            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-floppy-disk fa-xs icon-left"></i>Enregistrer</button>
 
             @if (session('status') === 'profile-updated')
                 <p

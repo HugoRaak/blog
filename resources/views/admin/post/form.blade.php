@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('layouts.admin')
 
 @section('title', $post->exists ? 'Modifier l\'article' : 'Créer un article')
 

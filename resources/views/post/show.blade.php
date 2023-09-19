@@ -1,9 +1,9 @@
-@extends('base')
+@extends('layouts.app')
 
 @section('title', $post->title)
 
 @section('head')
-    @vite(['resources/css/blog/show.css', 'resources/js/app.js'])
+    @vite('resources/css/blog/show.css')
 @endsection
 
 @section('content')

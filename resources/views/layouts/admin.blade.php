@@ -11,19 +11,10 @@
           crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
-    <title>@yield('title') | Administration</title>
+    <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
+    <title>@yield('title') | Administration HugoRaak</title>
+    @vite(['resources/js/app.js', 'resources/css/layouts.css'])
     @livewireStyles
-    <style>
-        .dropdown-menu {
-            display: none;
-            right: 0;
-            left: auto;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -40,17 +31,21 @@
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.category.')]) href="{{route('admin.category.index')}}">Catégories</a>
             </li>
         </ul>
-        <div class="ms-auto mx-4">
-            <div class="dropdown">
-                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ Auth::user()->name }}
+        <div class="ms-auto mx-4"  x-data="{ isOpen: false }">
+            <div class="dropdown" @click.outside="isOpen = false">
+                <button class="btn btn-dark" @click="isOpen = !isOpen">
+                    {{ Auth::user()->name }}<i class="fa-solid fa-caret-up fa-xs icon-right" x-show="isOpen"></i><i class="fa-solid fa-caret-down fa-xs icon-right" x-show="!isOpen"></i>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="/">Retour au site</a>
+                <div class="dropdown-menu end-0" :class="{ 'show': isOpen }">
+                    <a class="dropdown-item" href="/">
+                        <i class="fa-solid fa-laptop fa-xs icon-left"></i>Retour au site
+                    </a>
                     <hr class="dropdown-divider">
                     <form method="post" action="{{ route('logout') }}" onsubmit="return confirm('Êtes vous sûr de vouloir vous déconnecter ?')">
                         @csrf
-                        <button type="submit" class="dropdown-item">Se déconnecter</button>
+                        <button type="submit" class="dropdown-item">
+                            <i class="fa-solid fa-right-from-bracket fa-xs icon-left"></i>Se déconnecter
+                        </button>
                     </form>
                 </div>
             </div>

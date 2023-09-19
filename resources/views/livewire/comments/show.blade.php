@@ -27,21 +27,21 @@
             <div class="dropdown-btn" :class="(isButtonVisible || isOpen) ? 'visible' : 'invisible'" @click.outside="isOpen = false">
                 <button @click="isOpen = !isOpen" class="btn btn-outline-light text-black"><b>&#8942;</b></button>
             </div>
-            <div :class="{ 'dropdown-menu': true, 'show': isOpen }" class="dropdown-menu start-50">
+            <div :class="{ 'show': isOpen }" class="dropdown-menu custom-dropdown-menu start-50">
                 @if(Auth::user()->id === $comment->user->id)
                     <a wire:click="startEdit" class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
-                        <i class="fa-solid fa-pen fa-xs icon-dropdown"></i>Modifier
+                        <i class="fa-solid fa-pen fa-xs icon-left"></i>Modifier
                     </a>
                 @else
                     <a class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
-                        <i class="fa-solid fa-flag fa-xs icon-dropdown"></i>Signaler
+                        <i class="fa-solid fa-flag fa-xs icon-left"></i>Signaler
                     </a>
                 @endif
                 @if(Auth::user()->isAdmin() || Auth::user()->id === $comment->user->id)
                     <form action="@if($comment instanceof \App\Models\Reply){{ route('reply.destroy', $comment) }}@else{{ route('comment.destroy', $comment) }}@endif" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
                         @csrf
                         @method('delete')
-                        <button class="dropdown-item" type="submit"><i class="fa-solid fa-trash fa-xs icon-dropdown"></i>Supprimer</button>
+                        <button class="dropdown-item" type="submit"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
                     </form>
                 @endif
             </div>

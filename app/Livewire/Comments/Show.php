@@ -31,10 +31,10 @@ class Show extends Component
     }
 
     #[On('update.{comment.id}')]
-    public function cancelEdit($type): void
+    public function cancelEdit(string $type): void
     {
         $this->edit = false;
-        if(get_class($this->comment) === $type) {
+        if (get_class($this->comment) === $type) {
             $this->dispatch('endUpdate', message: 'Le commentaire a bien été modifié')->self();
         }
     }
@@ -42,7 +42,7 @@ class Show extends Component
     public function render(): View|Application|Factory|ContactsApplication
     {
         return view('livewire.comments.show', [
-            'commentId' => $this->comment instanceof Reply ? $this->comment->comment->id : $this->comment->id,
+            'commentId' => $this->comment instanceof Reply ? $this->comment->comment?->id : $this->comment->id,
         ]);
     }
 }

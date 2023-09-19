@@ -12,6 +12,6 @@
     <form action="{{route('profile.destroy')}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer votre compte ?')" class="text-center mt-2">
         @method('delete')
         @csrf
-        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
     </form>
 </section>

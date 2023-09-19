@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CommentsList extends Component
@@ -33,7 +34,9 @@ class CommentsList extends Component
 
     public function loadComments(): void
     {
-        if ($this->commentsToLoad <= 0) return;
+        if ($this->commentsToLoad <= 0) {
+            return;
+        }
         $this->comments->push(
             ...$this->post->comments()
             ->with(['user', 'replies'])

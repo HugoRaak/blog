@@ -26,7 +26,7 @@
         </div>
 
         <div class="flex items-center gap-4 text-center mt-2">
-            <button type="submit" class="btn btn-secondary">Enregistrer</button>
+            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-floppy-disk fa-xs icon-left"></i>Enregistrer</button>
 
             @if (session('status') === 'password-updated')
                 <p

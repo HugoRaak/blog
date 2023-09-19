@@ -14,7 +14,7 @@ class CommentController extends Controller
     public function store(CommentFormRequest $request, string $slug, Post $post): RedirectResponse
     {
         $post->comments()->create(
-            $request->validated() + ['user_id' => Auth::user()->id]
+            $request->validated() + ['user_id' => Auth::user()?->id]
         );
         return back()->with('success', 'Votre commentaire a été posté');
     }

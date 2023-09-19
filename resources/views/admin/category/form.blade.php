@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('layouts.admin')
 
 @section('title', $category->exists ? 'Modifier la catégorie' : 'Créer une catégorie')
 

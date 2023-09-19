@@ -29,8 +29,7 @@ Route::prefix('posts')->name('post.')
         Route::get('', [PostController::class, 'index'])->name('index'),
         Route::prefix('/{slug}-{post}')->where([
             'post' => $idRegex,
-            'slug' => $slugRegex]
-        )->group(fn () => [
+            'slug' => $slugRegex])->group(fn () => [
             Route::get('', [PostController::class, 'show'])->name('show')->middleware('post.slug'),
             Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth'),
         ])
