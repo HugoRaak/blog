@@ -21,7 +21,9 @@
         <p>Catégorie(s) :</p>
         <h5>
             @foreach($post->categories as $category)
-                <span class="badge bg-secondary">{{$category->name}}</span>
+                <a href="{{ route('post.index', ['category' => $category->slug]) }}" class="text-decoration-none text-dark">
+                    <span class="badge bg-secondary">{{$category->name}}</span>
+                </a>
             @endforeach
         </h5>
     </div>

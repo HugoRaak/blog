@@ -1,0 +1,23 @@
+.icon-search {
+    margin-top: 12px;
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid black;
+}
+
+.offcanvas li {
+    transition: background-color 0.3s;
+}
+
+.offcanvas li:hover {
+    background-color: #e0e0e0;
+}
+
+.offcanvas li .category {
+    margin-left: 10px;
+}
+
+.category-all {
+    border-bottom: 1px solid black;
+}
