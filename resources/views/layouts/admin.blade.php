@@ -14,7 +14,7 @@
     <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
     <title>@yield('title') | Administration HugoRaak</title>
     @vite(['resources/js/app.js', 'resources/css/layouts.css'])
-    @livewireStyles
+    @yield('head', '')
 </head>
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -61,8 +61,6 @@
 <script>
     new TomSelect('select[multiple]', {plugins: {remove_button: {title: 'Supprimer'}}})
 </script>
-
-@livewireScripts
 
 </body>
 </html>

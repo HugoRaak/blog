@@ -1,6 +1,6 @@
 <section>
     @section('head')
-        @vite('resources/css/profile/info.css')
+        @vite(['resources/css/profile/info.css', 'resources/css/components/previewImage.css', 'resources/js/utils/previewImage.js'])
     @endsection
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -22,14 +22,14 @@
 
         <div class="row">
             <div class="col-2 picture-form">
-                <label for="picture" class="picture-label">
+                <label for="image" class="picture-label">
                     <img src="@if($user->picture) /storage/{{ $user->picture }} @else /storage/images/profile/default.png @endif"
                          alt="aperçu de l'image" id="imgPreview">
-                    <input type="file" name="picture" id="picture" class="picture-input" accept="image/*" onchange="previewImage(this)">
+                    <input type="file" name="picture" id="image" class="picture-input" accept="image/*" style="max-height: 100px;">
                     <span class="change-picture-text">Changer la photo (150x150)</span>
                 </label>
                 @error('picture')
-                    <div class="invalid-feedback">
+                    <div class="alert alert-danger">
                         {{ $message }}
                     </div>
                 @enderror
@@ -71,15 +71,4 @@
         </div>
     </form>
 
-    <script>
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imgPreview').src = e.target.result
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
 </section>

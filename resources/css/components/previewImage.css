@@ -1,0 +1,26 @@
+.picture-label {
+    cursor: pointer;
+}
+
+.picture-label:hover {
+    filter: brightness(70%);
+}
+
+.picture-input {
+    display: none;
+}
+
+.change-picture-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    display: none;
+}
+
+.picture-label:hover .change-picture-text {
+    display: block;
+}
