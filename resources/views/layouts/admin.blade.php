@@ -16,14 +16,18 @@
     @vite(['resources/js/app.js', 'resources/css/layouts.css'])
     @yield('head', '')
 </head>
-<body>
+<body x-data="{showScrollTop: false}"
+      @scroll.window="showScrollTop = window.pageYOffset > 350">
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Administration</a>
+    <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Administration</a>
 
     @php $routeName = Route::currentRouteName(); @endphp
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.user.')]) href="{{route('admin.user.index')}}">Utilisateurs</a>
+            </li>
             <li class="nav-item">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.post.')]) href="{{route('admin.post.index')}}">Posts</a>
             </li>
@@ -56,6 +60,9 @@
 <div class="container mt-4 mb-4">
     @include('shared.flash')
     @yield('content')
+    <div x-data class="scrollTop" x-show="showScrollTop" @click="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        <i class="fa-solid fa-chevron-up fa-xl"></i>
+    </div>
 </div>
 
 <script>

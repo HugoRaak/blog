@@ -38,8 +38,10 @@ Route::prefix('posts')->name('post.')
 /**
  * routes about comments and replies
  */
-Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy')->middleware('auth');
-Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('auth');
+Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy')
+    ->middleware('auth')->where(['comment' => $idRegex]);
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')
+    ->middleware('auth')->where(['reply' => $idRegex]);
 
 /**
  * routes about contact form
@@ -64,8 +66,15 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->controller(Profi
  * routes about the admin interface
  */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(fn () => [
+    Route::get('tableau-de-bord', \App\Http\Controllers\Admin\DashboardController::class)->name('dashboard'),
     Route::resource('post', \App\Http\Controllers\Admin\PostController::class)->except(['show']),
-    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show'])
+    Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']),
+    Route::prefix('user')->name('user.')->controller(\App\Http\Controllers\Admin\UserController::class)
+        ->group(fn () => [
+            Route::get('', 'index')->name('index'),
+            Route::get('/{user}', 'show')->name('show'),
+            Route::delete('/{user}', 'destroy')->name('destroy')->where(['user' => $idRegex])
+        ])
 ]);
 
 require __DIR__ . '/auth.php';

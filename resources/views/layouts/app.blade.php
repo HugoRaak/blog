@@ -46,7 +46,7 @@
                             <i class="fa-solid fa-user fa-xs icon-left"></i>Profile
                         </a>
                         @if(Auth::user()->isAdmin())
-                            <a class="dropdown-item" href="{{route('admin.post.index')}}">
+                            <a class="dropdown-item" href="{{route('admin.dashboard')}}">
                                 <i class="fa-solid fa-screwdriver-wrench fa-xs icon-left"></i>Administration
                             </a>
                         @endif

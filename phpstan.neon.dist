@@ -12,3 +12,4 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#^PHPDoc tag \@mixin contains unknown class App\\Models\\IdeHelper.*\.$#'
+        - '#Parameter \#1 \.\.\.\$values of method Illuminate\\Support\\Collection<int,App\\Models\\Comment>::push\(\) expects App\\Models\\Comment, App\\Models\\Reply given#'
