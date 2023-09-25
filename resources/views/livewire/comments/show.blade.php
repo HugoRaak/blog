@@ -1,5 +1,5 @@
 <div class="row comment"
-     x-data="{ isOpen: false, isButtonVisible: false, flashMessage: '' }"
+     x-data="{ isOpen: false, isButtonVisible: false, flashMessage: '', report: false }"
      @mouseenter="isButtonVisible = true"
      @mouseleave="isButtonVisible = false"
      wire:loading.delay.class="opacity-50" wire:target="startEdit"
@@ -31,21 +31,22 @@
         </div>
     </div>
     @auth
+        @php($user = Auth::user())
         <div class="col">
             <div class="dropdown-btn" :class="(isButtonVisible || isOpen) ? 'visible' : 'invisible'" @click.outside="isOpen = false">
                 <button @click="isOpen = !isOpen" class="btn btn-outline-light text-black"><b>&#8942;</b></button>
             </div>
             <div :class="{ 'show': isOpen }" class="dropdown-menu custom-dropdown-menu start-50">
-                @if(Auth::user()->id === $comment->user->id)
+                @if($user->id === $comment->user->id)
                     <a wire:click="startEdit" class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
                         <i class="fa-solid fa-pen fa-xs icon-left"></i>Modifier
                     </a>
-                @else
-                    <a class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
+                @elseif(!$user->authoredReports()->where('reportable_id', $comment->id)->where('reportable_type', get_class($comment))->exists())
+                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reportModal-{{ $commentId . $comment->id }}">
                         <i class="fa-solid fa-flag fa-xs icon-left"></i>Signaler
-                    </a>
+                    </button>
                 @endif
-                @if(Auth::user()->isAdmin() || Auth::user()->id === $comment->user->id)
+                @if($user->isAdmin() || $user->id === $comment->user->id)
                     <form action="@if($comment instanceof \App\Models\Reply){{ route('reply.destroy', $comment) }}@else{{ route('comment.destroy', $comment) }}@endif" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
                         @csrf
                         @method('delete')
@@ -56,6 +57,21 @@
         </div>
     @endauth
     <p>{!! nl2br(e($comment->message)) !!}</p>
+
+    <div class="modal fade" id="reportModal-{{ $commentId . $comment->id }}" tabindex="-1" aria-labelledby="reportModalLabel-{{ $commentId . $comment->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel-{{ $commentId . $comment->id }}">Faire un signalement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @livewire('comments.report-form', ['reportable' => $comment, 'post' => $post, key('report_form_' . $comment->id . $commentId)])
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div wire:loading.delay.class="opacity-50"
          x-data="{ isUpdating: false }"
          @update-{{$comment->id}}.dot="isUpdating = true; setTimeout(() => { isUpdating = false; }, 2500);"

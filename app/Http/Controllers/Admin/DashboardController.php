@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application as ContactsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -20,6 +21,7 @@ class DashboardController extends Controller
             'nbPosts' => Post::count(),
             'nbCategories' => Category::count(),
             'nbUsers' => User::count(),
+            'nbReports' => Report::count(),
         ]);
     }
 }

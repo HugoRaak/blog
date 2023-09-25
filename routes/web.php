@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ReplyController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Post\CommentController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,8 +72,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
     Route::prefix('user')->name('user.')->controller(\App\Http\Controllers\Admin\UserController::class)
         ->group(fn () => [
             Route::get('', 'index')->name('index'),
-            Route::get('/{user}', 'show')->name('show'),
+            Route::get('/{user}', 'show')->name('show')->where(['user' => $idRegex]),
             Route::delete('/{user}', 'destroy')->name('destroy')->where(['user' => $idRegex])
+        ]),
+    Route::prefix('report')->name('report.')->controller(\App\Http\Controllers\Admin\ReportController::class)
+        ->group(fn () => [
+            Route::get('', 'index')->name('index'),
+            Route::get('/{report}', 'show')->name('show')->where(['report' => $idRegex]),
+            Route::delete('/{report}', 'destroy')->name('destroy')->where(['report' => $idRegex])
         ])
 ]);
 

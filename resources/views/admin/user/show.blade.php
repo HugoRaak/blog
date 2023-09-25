@@ -2,6 +2,10 @@
 
 @section('title', $user->name)
 
+@section('head')
+    @vite('resources/css/admin/show.css')
+@endsection
+
 @section('content')
     <h1 class='text-center'>@yield('title')</h1>
 
@@ -41,7 +45,11 @@
                         <div class="card">
                             <div class="card-body">
                                 @if($comment instanceof \App\Models\Reply)
-                                    <h5 class="card-title text-center">En réponse à {{ $comment->comment->user->name }}</h5>
+                                    <h5 class="card-title text-center">En réponse à
+                                        <a href="{{ route('admin.user.show', $comment->comment->user) }}" class="link">
+                                            {{ $comment->comment->user->name }}
+                                        </a>
+                                    </h5>
                                     <p class="card-text opacity-50"><i>{{$comment->comment->message}}</i></p>
                                 @else
                                     <h5 class="card-title text-center">Sur l'article {{$comment->post->title}}</h5>

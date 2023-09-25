@@ -25,13 +25,16 @@
 
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+            <li class="nav-item nav-item-custom">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.user.')]) href="{{route('admin.user.index')}}">Utilisateurs</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-item-custom">
+                <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.report.')]) href="{{route('admin.report.index')}}">Signalements</a>
+            </li>
+            <li class="nav-item nav-item-custom">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.post.')]) href="{{route('admin.post.index')}}">Posts</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-item-custom">
                 <a @class(['nav-link', 'active' => str_starts_with($routeName, 'admin.category.')]) href="{{route('admin.category.index')}}">Catégories</a>
             </li>
         </ul>
