@@ -63,6 +63,11 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->controller(Profi
 ]);
 
 /**
+ * route about profile
+ */
+Route::get('profile/{user}', [ProfileController::class, 'show'])->name('profile.show')->where(['user' => $idRegex]);
+
+/**
  * routes about the admin interface
  */
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin'])->group(fn () => [
@@ -79,7 +84,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified', 'admin']
         ->group(fn () => [
             Route::get('', 'index')->name('index'),
             Route::get('/{report}', 'show')->name('show')->where(['report' => $idRegex]),
-            Route::delete('/{report}', 'destroy')->name('destroy')->where(['report' => $idRegex])
+            Route::delete('/do/{report}', 'do')->name('do')->where(['report' => $idRegex]),
+            Route::delete('/{report}', 'destroy')->name('destroy')->where(['report' => $idRegex]),
         ])
 ]);
 

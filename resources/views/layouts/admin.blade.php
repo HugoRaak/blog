@@ -19,7 +19,7 @@
 <body x-data="{showScrollTop: false}"
       @scroll.window="showScrollTop = window.pageYOffset > 350">
 <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Administration</a>
+    <a class="navbar-brand ms-2" href="{{ route('admin.dashboard') }}">Administration</a>
 
     @php $routeName = Route::currentRouteName(); @endphp
 

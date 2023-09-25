@@ -7,19 +7,28 @@
 @endsection
 
 @section('content')
-    <h1 class='text-center'>@yield('title')</h1>
+    <h1 class='text-center'>
+        @yield('title')
+        <form action="{{route('admin.user.destroy', $user)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet utilisateur ?')" class="ms-4" style="display: inline;">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
+        </form>
+    </h1>
 
     <div class="row mt-4">
         <div class="col-4">
             <img src="@if($user->picture) /storage/{{ $user->picture }} @else /storage/images/profile/default.png @endif"
                  alt="Photo de profile" style="max-height: 150px;">
         </div>
-        <div class="col-3">
-            <div class="card" style="max-height: 150px;">
+        <div class="col-4">
+            <div class="card" style="height: 150px;">
                 <div class="card-body">
                     <h5 class="card-title text-center">Informations personnelles</h5>
-                    <p class="card-text"><b>Nom</b> : {{ $user->name }}</p>
-                    <p class="card-text"><b>Email</b> : {{ $user->email }}</p>
+                    <div style="margin-top: 25px;">
+                        <p class="card-text"><b>Nom</b> : {{ $user->name }}</p>
+                        <p class="card-text"><b>Email</b> : {{ $user->email }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,12 +36,20 @@
             <div class="card" style="height: 150px;">
                 <div class="card-body">
                     <h5 class="card-title text-center">Statut et rôle</h5>
-                    <div style="margin-top: 30px;">
+                    <div style="margin-top: 25px;">
                         <p class="card-text"><b>Statut :</b> @if($user->email_verified_at) email vérifié {{Carbon\Carbon::parse($user->email_verified_at)->ago()}} @else email non vérifié @endif</p>
                         <p class="card-text"><b>Rôle :</b> {{ $user->role }}</p>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-2">
+            <a class="btn btn-primary" href="{{ route('admin.report.index', ['user-send' => $user]) }}">Signalements écris</a>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-warning text-black" href="{{ route('admin.report.index', ['user-receive' => $user]) }}">Signalements reçu</a>
         </div>
     </div>
     @if($comments->first())

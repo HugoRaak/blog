@@ -16,7 +16,9 @@
                      alt="Photo de profile">
             </div>
             <div class="profile-info">
-                <p class="mb-1"><b>{{$comment->user->name}}</b></p>
+                <a class="mb-1 user-link" href="{{ route('profile.show', $comment->user) }}">
+                    <b>{{$comment->user->name}}</b>
+                </a>
                 <div class="date-reply">
                     <p class="text-muted">
                         {{ \Carbon\Carbon::parse($comment->created_at)->ago() }}
@@ -66,7 +68,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @livewire('comments.report-form', ['reportable' => $comment, 'post' => $post, key('report_form_' . $comment->id . $commentId)])
+                    @livewire('report-form', ['reportable' => $comment, 'post' => $post, key('report_form_' . $comment->id . $commentId)])
                 </div>
             </div>
         </div>

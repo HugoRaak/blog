@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Comments;
+namespace App\Livewire;
 
 use App\Models\Comment;
 use App\Models\Post;
@@ -19,7 +19,7 @@ use Livewire\Features\SupportRedirects\Redirector;
 class ReportForm extends Component
 {
     public Reply|Comment|User $reportable;
-    public Post $post;
+    public ?Post $post = null;
 
     #[Rule('string|required|between:10,500')]
     /** @phpstan-ignore-next-line */
@@ -29,13 +29,16 @@ class ReportForm extends Component
     {
         $this->validate();
         $this->reportable->reports()->create($this->only('message') + ['user_id' => Auth::user()?->id]);
-        return redirect()->to(route('post.show', [
-            'slug' => $this->post->slug,
-            'post' => $this->post]))->with('success', 'Votre signalement a été enregistré');
+        if($this->post) {
+            return redirect()->to(route('post.show', [
+                'slug' => $this->post->slug,
+                'post' => $this->post]))->with('success', 'Votre signalement a été enregistré');
+        }
+        return redirect()->to('/')->with('success', 'Votre signalement a été enregistré');
     }
 
     public function render(): View|Application|Factory|ContactsApplication
     {
-        return view('livewire.comments.report-form');
+        return view('livewire.report-form');
     }
 }

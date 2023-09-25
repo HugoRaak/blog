@@ -10,16 +10,34 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application as ContactsApplication;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class ReportController extends Controller
 {
-    public function index(): View|Application|Factory|ContactsApplication
+    public function index(Request $request): View|Application|Factory|ContactsApplication
     {
+        $reports = Report::orderByDesc('created_at');
+        if($request->has('user-send')) {
+            $reports->where('user_id', $request->input('user-send'));
+        }
+        if($request->has('user-receive')) {
+            $reports->whereHasMorph(
+                'reportable',
+                [Comment::class, Reply::class],
+                fn (Builder $query) => $query->where('user_id', $request->input('user-receive'))
+            )->orWhereHasMorph(
+                'reportable',
+                [User::class],
+                fn (Builder $query) => $query->where('id', $request->input('user-receive'))
+            );
+        }
         return view('admin.report.index', [
-           'reports' => Report::orderByDesc('created_at')
+           'reports' => $reports
                ->with(['user:id,name', 'reportable' => function (MorphTo $morphTo) {
                    $morphTo->morphWith([
                        Reply::class => ['user:id,name'],
@@ -42,9 +60,21 @@ class ReportController extends Controller
         ]);
     }
 
-    public function destroy(Report $report): RedirectResponse
+    public function do(Report $report): RedirectResponse
+    {
+        $reportableId = $report->reportable_id;
+        $reportableType = $report->reportable_type;
+        $report->reportable()->delete();
+        Report::where('reportable_id', $reportableId)
+            ->where('reportable_type', $reportableType)
+            ->delete();
+        Report::whereDoesntHave('reportable')->delete();
+        return redirect()->route('admin.report.index')->with('success', 'Le signalement a bien été traité');
+    }
+
+    public function destroy(Report $report): RedirectResponse|Redirector
     {
         $report->delete();
-        return back()->with('success', 'Le signalement a bien été supprimé');
+        return back(302, [], redirect()->route('admin.report.index'))->with('success', 'Le signalement a bien été supprimé');
     }
 }

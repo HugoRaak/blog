@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
+use Illuminate\Contracts\Foundation\Application as ContactsApplication;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,5 +70,10 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/')->with('success', 'Le compte a été supprimé');
+    }
+
+    public function show(User $user): \Illuminate\Contracts\View\View|Application|Factory|ContactsApplication
+    {
+        return view('profile.show', ['user' => $user]);
     }
 }

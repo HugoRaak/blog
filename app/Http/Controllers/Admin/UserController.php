@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
 {
@@ -29,9 +30,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user): RedirectResponse|Redirector
     {
         $user->delete();
-        return back()->with('success', 'L\'utilisateur a bien été supprimé');
+        return back(302, [], redirect()->route('admin.user.index'))->with('success', 'L\'utilisateur a bien été supprimé');
     }
 }

@@ -7,7 +7,14 @@
 @endsection
 
 @section('content')
-    <h1 class='text-center'>@yield('title')</h1>
+    <h1 class='text-center'>
+        @yield('title')
+        <form action="{{route('admin.report.destroy', $report)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce signalement ?')" class="ms-4" style="display: inline;">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
+        </form>
+    </h1>
 
     <div class="mt-4">
         <b>Auteur :</b> <a href="{{ route('admin.user.show', $report->user) }}" class="link">{{ $report->user->name }}</a>
@@ -39,8 +46,14 @@
                 </div>
             </div>
         @else
-            Utilisateur {{$report->reportable->name}}
+            <b>Utilisateur :</b> <a href="{{ route('admin.user.show', $report->reportable) }}" class="link">{{$report->reportable->name}}</a>
         @endif
     </div>
+    <br><br>
+    <form action="{{route('admin.report.do', $report)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir traiter ce signalement ? Cela entraînera la suppression du sujet dont il est question et du signalement.')" style="display: inline;">
+        @method('delete')
+        @csrf
+        <button type="submit" class="btn btn-warning"><i class="fa-regular fa-circle-check fa-xs icon-left"></i>Traiter</button>
+    </form>
 
 @endsection
