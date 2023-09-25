@@ -29,7 +29,7 @@ class ReportForm extends Component
     {
         $this->validate();
         $this->reportable->reports()->create($this->only('message') + ['user_id' => Auth::user()?->id]);
-        if($this->post) {
+        if ($this->post) {
             return redirect()->to(route('post.show', [
                 'slug' => $this->post->slug,
                 'post' => $this->post]))->with('success', 'Votre signalement a été enregistré');

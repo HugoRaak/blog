@@ -9,7 +9,7 @@
 @section('content')
     <h1 class='text-center'>
         @yield('title')
-        <form action="{{route('admin.report.destroy', $report)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce signalement ?')" class="ms-4" style="display: inline;">
+        <form action="{{route('admin.report.destroy', [$report, 'r' => true])}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce signalement ?')" class="ms-4" style="display: inline;">
             @method('delete')
             @csrf
             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>

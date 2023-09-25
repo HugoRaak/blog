@@ -34,29 +34,34 @@
     </div>
     @auth
         @php($user = Auth::user())
-        <div class="col">
-            <div class="dropdown-btn" :class="(isButtonVisible || isOpen) ? 'visible' : 'invisible'" @click.outside="isOpen = false">
-                <button @click="isOpen = !isOpen" class="btn btn-outline-light text-black"><b>&#8942;</b></button>
+        @if($user->id === $comment->user->id
+            || !$user->authoredReports()->where('reportable_id', $comment->id)->where('reportable_type', get_class($comment))->exists()
+            || $user->isAdmin()
+        )
+            <div class="col">
+                <div class="dropdown-btn" :class="(isButtonVisible || isOpen) ? 'visible' : 'invisible'" @click.outside="isOpen = false">
+                    <button @click="isOpen = !isOpen" class="btn btn-outline-light text-black"><b>&#8942;</b></button>
+                </div>
+                <div :class="{ 'show': isOpen }" class="dropdown-menu custom-dropdown-menu start-50">
+                    @if($user->id === $comment->user->id)
+                        <a wire:click="startEdit" class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
+                            <i class="fa-solid fa-pen fa-xs icon-left"></i>Modifier
+                        </a>
+                    @elseif(!$user->authoredReports()->where('reportable_id', $comment->id)->where('reportable_type', get_class($comment))->exists())
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reportModal-{{ $commentId . $comment->id }}">
+                            <i class="fa-solid fa-flag fa-xs icon-left"></i>Signaler
+                        </button>
+                    @endif
+                    @if($user->isAdmin() || $user->id === $comment->user->id)
+                        <form action="@if($comment instanceof \App\Models\Reply){{ route('reply.destroy', $comment) }}@else{{ route('comment.destroy', $comment) }}@endif" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
+                            @csrf
+                            @method('delete')
+                            <button class="dropdown-item" type="submit"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
+                        </form>
+                    @endif
+                </div>
             </div>
-            <div :class="{ 'show': isOpen }" class="dropdown-menu custom-dropdown-menu start-50">
-                @if($user->id === $comment->user->id)
-                    <a wire:click="startEdit" class="dropdown-item" href="#c{{ $comment->id }}" @click.prevent="true">
-                        <i class="fa-solid fa-pen fa-xs icon-left"></i>Modifier
-                    </a>
-                @elseif(!$user->authoredReports()->where('reportable_id', $comment->id)->where('reportable_type', get_class($comment))->exists())
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reportModal-{{ $commentId . $comment->id }}">
-                        <i class="fa-solid fa-flag fa-xs icon-left"></i>Signaler
-                    </button>
-                @endif
-                @if($user->isAdmin() || $user->id === $comment->user->id)
-                    <form action="@if($comment instanceof \App\Models\Reply){{ route('reply.destroy', $comment) }}@else{{ route('comment.destroy', $comment) }}@endif" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce commentaire ?')">
-                        @csrf
-                        @method('delete')
-                        <button class="dropdown-item" type="submit"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
-                    </form>
-                @endif
-            </div>
-        </div>
+        @endif
     @endauth
     <p>{!! nl2br(e($comment->message)) !!}</p>
 

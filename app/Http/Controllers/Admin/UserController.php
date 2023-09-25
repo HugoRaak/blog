@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -25,14 +25,17 @@ class UserController extends Controller
         return view('admin.user.show', [
             'user' => $user,
             'comments' => $user->comments()->with('post:id,title')->get()
-                ->push(...$user->replies()->with(['comment:id,message,user_id', 'comment.user:id,name'])->get())
+                ->push(...$user->replies()->with(['comment', 'comment.user:id,name', 'comment.post:id,title'])->get())
                 ->sortByDesc('created_at'),
         ]);
     }
 
-    public function destroy(User $user): RedirectResponse|Redirector
+    public function destroy(Request $request, User $user): RedirectResponse
     {
         $user->delete();
-        return back(302, [], redirect()->route('admin.user.index'))->with('success', 'L\'utilisateur a bien été supprimé');
+        if (!$request->has('r')) {
+            return back()->with('success', 'L\'utilisateur a bien été supprimé');
+        }
+        return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a bien été supprimé');
     }
 }

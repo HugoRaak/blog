@@ -18,13 +18,6 @@ class Show extends Component
     public Post $post;
     public bool $edit = false;
 
-    public function mount(): void
-    {
-        if ($this->comment instanceof Reply) {
-            $this->comment->load('comment');
-        }
-    }
-
     public function startEdit(): void
     {
         $this->edit = true;

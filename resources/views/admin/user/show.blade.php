@@ -9,7 +9,7 @@
 @section('content')
     <h1 class='text-center'>
         @yield('title')
-        <form action="{{route('admin.user.destroy', $user)}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet utilisateur ?')" class="ms-4" style="display: inline;">
+        <form action="{{route('admin.user.destroy', [$user, 'r' => true])}}" method="post" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer cet utilisateur ?')" class="ms-4" style="display: inline;">
             @method('delete')
             @csrf
             <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash fa-xs icon-left"></i>Supprimer</button>
@@ -45,12 +45,16 @@
         </div>
     </div>
     <div class="row justify-content-center mt-4">
-        <div class="col-2">
-            <a class="btn btn-primary" href="{{ route('admin.report.index', ['user-send' => $user]) }}">Signalements écris</a>
-        </div>
-        <div class="col-2">
-            <a class="btn btn-warning text-black" href="{{ route('admin.report.index', ['user-receive' => $user]) }}">Signalements reçu</a>
-        </div>
+        @if($user->authoredReports()->exists())
+            <div class="col-2">
+                <a class="btn btn-primary" href="{{ route('admin.report.index', ['user-send' => $user]) }}">Signalements écris</a>
+            </div>
+        @endif
+        @if($user->reports()->exists())
+            <div class="col-2">
+                <a class="btn btn-warning text-black" href="{{ route('admin.report.index', ['user-receive' => $user]) }}">Signalements reçu</a>
+            </div>
+        @endif
     </div>
     @if($comments->first())
         <div class="mt-4 text-center" x-data="{showComments : false}">
@@ -66,6 +70,7 @@
                                         <a href="{{ route('admin.user.show', $comment->comment->user) }}" class="link">
                                             {{ $comment->comment->user->name }}
                                         </a>
+                                        sur le post {{ $comment->comment->post->title }}
                                     </h5>
                                     <p class="card-text opacity-50"><i>{{$comment->comment->message}}</i></p>
                                 @else

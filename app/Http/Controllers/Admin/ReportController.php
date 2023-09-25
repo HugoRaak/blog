@@ -22,10 +22,10 @@ class ReportController extends Controller
     public function index(Request $request): View|Application|Factory|ContactsApplication
     {
         $reports = Report::orderByDesc('created_at');
-        if($request->has('user-send')) {
+        if ($request->has('user-send')) {
             $reports->where('user_id', $request->input('user-send'));
         }
-        if($request->has('user-receive')) {
+        if ($request->has('user-receive')) {
             $reports->whereHasMorph(
                 'reportable',
                 [Comment::class, Reply::class],
@@ -51,12 +51,7 @@ class ReportController extends Controller
     public function show(Report $report): View|Application|Factory|ContactsApplication
     {
         return view('admin.report.show', [
-            'report' => $report->load(['user', 'reportable' => function (MorphTo $morphTo) {
-                    $morphTo->morphWith([
-                        Reply::class => ['user', 'comment', 'comment.post:id,title', 'comment.user'],
-                        Comment::class => ['user', 'post:id,title'],
-                    ]);
-            }])
+            'report' => $report
         ]);
     }
 
@@ -72,9 +67,12 @@ class ReportController extends Controller
         return redirect()->route('admin.report.index')->with('success', 'Le signalement a bien été traité');
     }
 
-    public function destroy(Report $report): RedirectResponse|Redirector
+    public function destroy(Request $request, Report $report): RedirectResponse
     {
         $report->delete();
-        return back(302, [], redirect()->route('admin.report.index'))->with('success', 'Le signalement a bien été supprimé');
+        if (!$request->has('r')) {
+            return back()->with('success', 'Le signalement a bien été supprimé');
+        }
+        return redirect()->route('admin.report.index')->with('success', 'Le signalement a bien été supprimé');
     }
 }

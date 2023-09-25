@@ -60,7 +60,8 @@ class PostController extends Controller
     {
         return view('post.show', [
             'post' => $post,
-            'nbComments' => $post->comments()->count(),
+            'nbComments' => $post->comments()->count()
+                + array_sum($post->comments()->withCount('replies')->pluck('replies_count')->toArray()),
         ]);
     }
 }
