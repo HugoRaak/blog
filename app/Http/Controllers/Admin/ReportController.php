@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 
 class ReportController extends Controller
 {
@@ -71,7 +70,7 @@ class ReportController extends Controller
     {
         $report->delete();
         if (!$request->has('r')) {
-            return back()->with('success', 'Le signalement a bien été supprimé');
+            return redirect()->back()->with('success', 'Le signalement a bien été supprimé');
         }
         return redirect()->route('admin.report.index')->with('success', 'Le signalement a bien été supprimé');
     }

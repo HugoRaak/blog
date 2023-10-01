@@ -12,6 +12,6 @@ class ReplyController extends Controller
     public function destroy(Reply $reply): RedirectResponse
     {
         $reply->delete();
-        return back()->with('success', 'La réponse a bien été supprimé');
+        return redirect()->back()->with('success', 'La réponse a bien été supprimé');
     }
 }

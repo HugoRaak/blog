@@ -29,3 +29,11 @@
 .nav-item-custom {
     margin-left: 10px;
 }
+
+.contact-link {
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}

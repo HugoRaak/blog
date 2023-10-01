@@ -39,6 +39,11 @@ class PostRepository
         return $routeParameters;
     }
 
+    /**
+     * redirect user with previous url in session and stop when 2 redirect has been done
+     *
+     * @param string[] $previousParameters
+     */
     public function redirectQuery(SearchPostRequest $request, array $previousParameters): ?RedirectResponse
     {
         $routeParameters = $this->urlBuilder($previousParameters);

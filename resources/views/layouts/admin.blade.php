@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <script src="https://kit.fontawesome.com/2b9b41b5e5.js" crossorigin="anonymous"></script>
     <title>@yield('title') | Administration HugoRaak</title>
+    <link rel="icon" href="/storage/images/logo.ico" type="image/x-icon">
     @vite(['resources/js/app.js', 'resources/css/layouts.css'])
     @yield('head', '')
 </head>

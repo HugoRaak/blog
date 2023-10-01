@@ -34,7 +34,7 @@ class UserController extends Controller
     {
         $user->delete();
         if (!$request->has('r')) {
-            return back()->with('success', 'L\'utilisateur a bien été supprimé');
+            return redirect()->back()->with('success', 'L\'utilisateur a bien été supprimé');
         }
         return redirect()->route('admin.user.index')->with('success', 'L\'utilisateur a bien été supprimé');
     }

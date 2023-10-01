@@ -16,12 +16,12 @@ class CommentController extends Controller
         $post->comments()->create(
             $request->validated() + ['user_id' => Auth::user()?->id]
         );
-        return back()->with('success', 'Votre commentaire a été posté');
+        return redirect()->back()->with('success', 'Votre commentaire a été posté');
     }
 
     public function destroy(Comment $comment): RedirectResponse
     {
         $comment->delete();
-        return back()->with('success', 'Le commentaire a bien été supprimé');
+        return redirect()->back()->with('success', 'Le commentaire a bien été supprimé');
     }
 }
