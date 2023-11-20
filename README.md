@@ -11,4 +11,4 @@
 
 ## License
 
-[MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT)
