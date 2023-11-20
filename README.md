@@ -9,6 +9,44 @@
 2. <a href="https://livewire.laravel.com" target="_blank">Livewire</a> complexe interaction with user without leaving PHP
 3. <a href="https://alpinejs.dev" target="_blank">Alpinejs</a> for basic interaction with user
 
+## 🚀 Quick start
+
+1.  **Install all composer dependencies**
+
+    ```sh
+    composer install
+    ```
+
+2.  **Install all npm dependencies**
+
+    ```sh
+    npm install
+    ```
+
+3.  **Migrate the database**
+
+    ```sh
+    php artisan migrate
+    ```
+
+4. **Make sure there is a symbolic link**
+
+    ```sh
+    php artisan storage:link
+    ```
+
+5. **Compile assets**
+
+   ```sh
+    npm run dev
+    ```
+   
+7. **Start the development server **
+
+   ```sh
+    php artisan serve
+   ```
+   
 ## License
 
 [MIT license](https://opensource.org/licenses/MIT)
